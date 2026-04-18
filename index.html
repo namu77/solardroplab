@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Oceandesal Lab | An Jinseok</title>
+<style>
+  :root{--blue:#0ea5e9;--teal:#0d9488;--dark:#0d2137;--mid:#0e3251;--gray:#94a3b8;--white:#ffffff;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Segoe UI',sans-serif;background:var(--dark);color:var(--white);}
+
+  nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(13,33,55,0.92);backdrop-filter:blur(10px);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(14,165,233,0.2);}
+  .nav-logo{font-weight:700;font-size:1rem;color:var(--blue);}
+  .nav-links{display:flex;gap:1.5rem;}
+  .nav-links a{color:var(--gray);text-decoration:none;font-size:.85rem;transition:.2s;}
+  .nav-links a:hover{color:var(--blue);}
+
+  #hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:6rem 2rem 4rem;
+    background:radial-gradient(ellipse at 50% 30%,rgba(14,165,233,0.18) 0%,transparent 60%),
+    linear-gradient(180deg,#0a3d5c 0%,#0d2137 60%,#050d1a 100%);
+    position:relative;overflow:hidden;}
+  .hero-tag{background:rgba(14,165,233,0.15);border:1px solid rgba(14,165,233,0.3);color:var(--blue);padding:.4rem 1rem;border-radius:99px;font-size:.85rem;margin-bottom:1.5rem;display:inline-block;}
+  #hero h1{font-size:clamp(2.2rem,6vw,4.5rem);font-weight:800;line-height:1.1;margin-bottom:.5rem;}
+  #hero h1 span{color:var(--blue);}
+  .hero-sub{font-size:1.1rem;color:var(--gray);margin-bottom:.5rem;max-width:600px;}
+  .hero-name-kr{font-size:.95rem;color:rgba(148,163,184,0.7);margin-bottom:2rem;}
+  .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;}
+  .btn-primary{background:var(--blue);color:#fff;padding:.75rem 2rem;border-radius:8px;text-decoration:none;font-weight:600;transition:.2s;}
+  .btn-primary:hover{background:#0284c7;}
+  .btn-outline{border:1px solid var(--blue);color:var(--blue);padding:.75rem 2rem;border-radius:8px;text-decoration:none;font-weight:600;transition:.2s;}
+  .btn-outline:hover{background:rgba(14,165,233,0.1);}
+  .hero-waves{position:absolute;bottom:0;left:0;width:100%;pointer-events:none;}
+
+  .wrap{max-width:1000px;margin:0 auto;padding:5rem 2rem;}
+  .stag{color:var(--teal);font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem;}
+  h2{font-size:clamp(1.8rem,4vw,2.4rem);font-weight:800;margin-bottom:1rem;}
+  .divider{width:48px;height:3px;background:var(--blue);border-radius:2px;margin-bottom:2rem;}
+
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;}
+  .about-text p{color:var(--gray);line-height:1.8;margin-bottom:1rem;font-size:.95rem;}
+  .about-card{background:var(--mid);border:1px solid rgba(14,165,233,0.15);border-radius:16px;padding:2rem;}
+  .about-card blockquote{color:var(--gray);line-height:1.8;font-size:.95rem;font-style:italic;border-left:3px solid var(--blue);padding-left:1rem;margin-bottom:1.5rem;}
+  .stats-row{display:flex;gap:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.07);}
+  .stat-num{font-size:1.5rem;font-weight:800;color:var(--blue);}
+  .stat-label{color:var(--gray);font-size:.8rem;}
+  .chip-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem;}
+  .chip{padding:.4rem .9rem;border-radius:99px;font-size:.8rem;font-weight:600;}
+  .chip-blue{background:rgba(14,165,233,0.15);color:var(--blue);border:1px solid rgba(14,165,233,0.3);}
+  .chip-teal{background:rgba(13,148,136,0.15);color:#2dd4bf;border:1px solid rgba(13,148,136,0.3);}
+
+  img{max-width:100%;border-radius:10px;display:block;}
+  .img-card{background:var(--mid);border:1px solid rgba(14,165,233,0.1);border-radius:12px;overflow:hidden;}
+  .img-card img{width:100%;aspect-ratio:4/3;object-fit:cover;opacity:.9;transition:.2s;}
+  .img-card img:hover{opacity:1;}
+  .img-caption{padding:.75rem 1rem;color:var(--gray);font-size:.8rem;}
+  .photo-grid-single .img-card img{aspect-ratio:unset;object-fit:unset;height:auto;}
+  .photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.5rem;}
+  .photo-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1.5rem;}
+  .photo-grid-single{display:flex;flex-direction:column;gap:1.25rem;margin-top:1.5rem;}
+
+  .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start;margin-top:2rem;}
+  .why-story{background:linear-gradient(135deg,rgba(14,165,233,0.1),rgba(13,148,136,0.08));border:1px solid rgba(14,165,233,0.2);border-radius:16px;padding:2rem;}
+  .why-story p{color:var(--gray);line-height:1.9;font-size:.95rem;margin-bottom:1rem;}
+  .country-list{display:flex;flex-direction:column;gap:.75rem;}
+  .country-item{background:var(--mid);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:.9rem 1.2rem;display:flex;align-items:center;gap:1rem;}
+  .country-flag{font-size:1.5rem;flex-shrink:0;}
+  .country-info h4{font-size:.9rem;font-weight:700;margin-bottom:.2rem;}
+  .country-info p{color:var(--gray);font-size:.8rem;line-height:1.5;}
+  .stress-badge{margin-left:auto;padding:.25rem .7rem;border-radius:99px;font-size:.75rem;font-weight:700;flex-shrink:0;}
+  .extreme{background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.3);}
+  .high{background:rgba(245,158,11,0.15);color:#fbbf24;border:1px solid rgba(245,158,11,0.3);}
+
+  .problem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:2rem;}
+  .problem-card{background:var(--mid);border:1px solid rgba(14,165,233,0.1);border-radius:12px;padding:1.5rem;}
+  .problem-card h3{font-size:1rem;margin-bottom:.75rem;color:var(--blue);}
+  .problem-card ul{color:var(--gray);font-size:.9rem;line-height:1.8;padding-left:1.2rem;margin-top:.5rem;}
+  .problem-card ul li{margin-bottom:.4rem;}
+
+  .sdg-row{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem;}
+  .sdg-card{background:var(--mid);border-radius:12px;padding:1.5rem;border-left:4px solid var(--blue);}
+  .sdg-card.teal{border-left-color:var(--teal);}
+  .sdg-card h3{font-size:1rem;margin-bottom:.5rem;}
+  .sdg-card p{color:var(--gray);font-size:.9rem;line-height:1.7;}
+  .sig-list{margin-top:2rem;display:flex;flex-direction:column;gap:1rem;}
+  .sig-item{display:flex;gap:1rem;align-items:flex-start;}
+  .sig-icon{width:36px;height:36px;border-radius:8px;background:rgba(14,165,233,0.15);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+  .sig-item p{color:var(--gray);font-size:.9rem;line-height:1.7;}
+  .sig-item strong{color:var(--white);}
+
+  .timeline{position:relative;padding-left:2rem;margin-top:2rem;}
+  .timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--blue),var(--teal));}
+  .timeline::after{content:'▼';position:absolute;left:-5px;bottom:-20px;color:var(--teal);font-size:1rem;}
+  .tl-item{position:relative;margin-bottom:2.5rem;padding-left:1.5rem;}
+  .tl-dot{position:absolute;left:-2.4rem;top:.2rem;width:14px;height:14px;border-radius:50%;background:var(--blue);border:2px solid var(--dark);}
+  .tl-dot.teal{background:var(--teal);}
+  .tl-dot.now{background:#a78bfa;}
+  .tl-date{color:var(--blue);font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
+  .tl-title{font-weight:700;margin:.25rem 0;}
+  .tl-desc{color:var(--gray);font-size:.9rem;line-height:1.7;}
+  .tl-img{margin-top:1rem;max-width:280px;border-radius:10px;overflow:hidden;}
+  .tl-img img{width:100%;}
+
+  .proto-tabs{display:flex;align-items:flex-end;gap:.5rem;margin-bottom:2rem;}
+  .tab-btn{padding:.5rem 1.4rem;border-radius:8px;border:1px solid rgba(14,165,233,0.2);background:transparent;color:var(--gray);cursor:pointer;font-size:.8rem;font-weight:600;transition:all .25s;opacity:.5;transform:scale(0.93);transform-origin:bottom left;}
+  .tab-btn.active{background:var(--blue);color:#fff;border-color:var(--blue);font-size:1rem;padding:.65rem 1.8rem;opacity:1;transform:scale(1);}
+  .tab-btn.p2-btn.active{background:linear-gradient(135deg,#0d9488,#0ea5e9);border-color:transparent;}
+  .tab-content{display:none;}
+  .tab-content.active{display:block;}
+  .proto-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+  .proto-card{background:var(--mid);border:1px solid rgba(14,165,233,0.1);border-radius:12px;padding:1.5rem;}
+  .proto-card h3{color:var(--blue);margin-bottom:1rem;font-size:1rem;}
+  .proto-card p{color:var(--gray);font-size:.9rem;line-height:1.7;margin-top:.5rem;}
+  .proto-card ul{color:var(--gray);font-size:.9rem;line-height:1.8;padding-left:1.2rem;margin-top:.5rem;}
+  .proto-card ul li{margin-bottom:.4rem;}
+
+  .chart-wrap{background:var(--mid);border:1px solid rgba(14,165,233,0.15);border-radius:16px;padding:2rem;margin-top:2rem;}
+  .bar-chart{display:flex;flex-direction:column;gap:1rem;}
+  .bar-row{display:flex;align-items:center;gap:1rem;}
+  .bar-label{width:180px;font-size:.85rem;color:var(--gray);flex-shrink:0;text-align:right;}
+  .bar-track{flex:1;background:rgba(255,255,255,0.05);border-radius:99px;height:28px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:99px;display:flex;align-items:center;padding-left:.75rem;font-size:.78rem;font-weight:700;color:#fff;animation:growBar 1.2s ease forwards;width:0;}
+  @keyframes growBar{to{width:var(--w);}}
+  .bar-val{width:48px;font-size:.85rem;color:var(--blue);font-weight:700;}
+
+  .img-placeholder{background:rgba(14,165,233,0.08);border:2px dashed rgba(14,165,233,0.4);border-radius:12px;padding:2rem;text-align:center;margin:.5rem 0;}
+  .img-placeholder .slot-name{color:var(--blue);font-weight:700;font-size:.9rem;margin-bottom:.5rem;}
+  .img-placeholder .slot-desc{color:var(--gray);font-size:.8rem;}
+
+  .contact-wrap{max-width:600px;margin:0 auto;text-align:center;padding:5rem 2rem;}
+  .contact-wrap p{color:var(--gray);line-height:1.8;margin-bottom:2rem;}
+  .contact-box{background:var(--mid);border:1px solid rgba(14,165,233,0.2);border-radius:16px;padding:2rem;}
+
+  footer{text-align:center;padding:2rem;color:var(--gray);font-size:.85rem;border-top:1px solid rgba(255,255,255,0.05);}
+
+  /* ── Uniform background from About to Footer ── */
+  #about, #why, #problem, #project, #timeline, #prototypes, #contact, footer {
+    background: var(--dark);
+  }
+
+  /* ── Prototype 2 visual emphasis ── */
+  .tab-btn.p2-btn {
+    background: linear-gradient(135deg, #0d9488, #0ea5e9);
+    color: #fff;
+    border-color: transparent;
+    font-weight: 700;
+    position: relative;
+  }
+  .tab-btn.p2-btn::after {
+    content: '⭐ CORE';
+    position: absolute;
+    top: -10px;
+    right: -6px;
+    background: #f59e0b;
+    color: #000;
+    font-size: .6rem;
+    font-weight: 800;
+    padding: .15rem .45rem;
+    border-radius: 99px;
+    letter-spacing: .05em;
+  }
+  .tab-btn.p2-btn:hover { opacity: .88; }
+  .tab-btn.p2-btn.active {
+    box-shadow: 0 0 0 2px #0d9488, 0 4px 24px rgba(13,148,136,.35);
+  }
+
+  #p2.active {
+    background: linear-gradient(135deg, rgba(13,148,136,.08), rgba(14,165,233,.06));
+    border: 1px solid rgba(13,148,136,.25);
+    border-radius: 16px;
+    padding: 2rem;
+  }
+  .p2-banner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: linear-gradient(90deg, rgba(13,148,136,.2), rgba(14,165,233,.1));
+    border: 1px solid rgba(13,148,136,.35);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .p2-banner-icon { font-size: 2rem; flex-shrink: 0; }
+  .p2-banner-text h3 { font-size: 1rem; color: #2dd4bf; margin-bottom: .25rem; }
+  .p2-banner-text p  { color: var(--gray); font-size: .85rem; line-height: 1.6; }
+
+  .improvement-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .improvement-card {
+    background: var(--mid);
+    border: 1px solid rgba(13,148,136,.25);
+    border-left: 4px solid #0d9488;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .improvement-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(13,148,136,.2);
+  }
+  .improvement-card .ic-header {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    margin-bottom: .75rem;
+  }
+  .improvement-card .ic-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: rgba(13,148,136,.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .improvement-card .ic-title { font-weight: 700; font-size: .95rem; color: #2dd4bf; }
+  .improvement-card .ic-badge {
+    margin-left: auto;
+    padding: .2rem .6rem;
+    border-radius: 99px;
+    font-size: .7rem;
+    font-weight: 700;
+    background: rgba(13,148,136,.15);
+    color: #2dd4bf;
+    border: 1px solid rgba(13,148,136,.3);
+    white-space: nowrap;
+  }
+  .improvement-card .ic-reason {
+    color: var(--gray);
+    font-size: .85rem;
+    line-height: 1.7;
+  }
+  /* ── Limitations warning cards ── */
+  .limit-cards { display: flex; flex-direction: column; gap: .85rem; margin-top: 1rem; }
+  .limit-card {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: rgba(239,68,68,0.07);
+    border: 1px solid rgba(239,68,68,0.22);
+    border-left: 4px solid #ef4444;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+  }
+  .limit-card-icon {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    margin-top: .1rem;
+  }
+  .limit-card-body h4 { color: #f87171; font-size: .85rem; font-weight: 700; margin-bottom: .35rem; }
+  .limit-card-body p  { color: var(--gray); font-size: .87rem; line-height: 1.7; }
+
+  .p2-bridge {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    background: linear-gradient(90deg, rgba(13,148,136,.12), rgba(14,165,233,.08));
+    border: 1px solid rgba(13,148,136,.3);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-top: 1.25rem;
+  }
+  .p2-bridge p { color: var(--gray); font-size: .87rem; line-height: 1.6; flex: 1; }
+  .p2-bridge p strong { color: #2dd4bf; }
+  .p2-bridge-btn {
+    background: linear-gradient(135deg, #0d9488, #0ea5e9);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: .6rem 1.2rem;
+    font-size: .85rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity .2s;
+    flex-shrink: 0;
+  }
+  .p2-bridge-btn:hover { opacity: .85; }
+
+  @media(max-width:700px){ .improvement-grid { grid-template-columns: 1fr; } }
+
+  @media(max-width:700px){
+    .about-grid,.why-grid,.sdg-row,.proto-grid{grid-template-columns:1fr;}
+    .photo-grid{grid-template-columns:repeat(2,1fr);}
+    .nav-links{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">🌊 OCEANDESAL LAB</div>
+  <div class="nav-links">
+    <a href="#hero">Home</a>
+    <a href="#about">About</a>
+    <a href="#why">Why Water</a>
+    <a href="#project">Project</a>
+    <a href="#timeline">Timeline</a>
+    <a href="#prototypes">Prototypes</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-tag">🌊 High School Researcher · Environmental Advocate</div>
+  <h1>Providing Clean &amp; Safe Water<br/><span>For People Who Need It Most</span></h1>
+  <p class="hero-sub">A passive solar desalination project targeting post-conflict and low-income regions</p>
+  <p class="hero-name-kr">An Jinseok · 안진석</p>
+  <div class="hero-btns">
+    <a href="#problem" class="btn-primary">View My Research</a>
+    <a href="#contact" class="btn-outline">Get in Touch</a>
+  </div>
+  <svg class="hero-waves" viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="rgba(14,165,233,0.1)"/>
+    <path d="M0,55 C400,10 1000,70 1440,30 L1440,80 L0,80 Z" fill="rgba(13,148,136,0.07)"/>
+  </svg>
+</div>
+
+<!-- ABOUT -->
+<div id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-text">
+        <div class="stag">About Me</div>
+        <h2>Who Am I</h2>
+        <div class="divider"></div>
+        <p>I am Jinseok (Andrew) An, a highschool student living in Jeju island. I am interested in environmental science and especially water scarcity. I like to find pragmatic solutions to environmental issues by making models rather than only discussing the problems theoretically. Therefore, I am running this research project to develop a cost and energy effective seawater desalination plant.</p>
+        <div class="chip-row">
+          <span class="chip chip-blue">🌍 SDG 6 Clean Water</span>
+          <span class="chip chip-teal">♻️ SDG 13 Climate Action</span>
+          <span class="chip chip-blue">🔬 Environmental Research</span>
+        </div>
+      </div>
+      <div class="about-card">
+        <div style="font-size:3rem;margin-bottom:1rem;">💧</div>
+        <blockquote>"To design a cost-effective, energy-free desalination system that empowers individuals and communities — especially in post-conflict and low-income regions — to access clean, safe drinking water."</blockquote>
+        <div class="stats-row">
+          <div><div class="stat-num">2</div><div class="stat-label">Prototypes Built</div></div>
+          <div><div class="stat-num">2</div><div class="stat-label">SDGs Addressed</div></div>
+          <div><div class="stat-num">1+</div><div class="stat-label">Year of Research</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY WATER -->
+<div id="why">
+  <div class="wrap">
+    <div class="stag">My Story</div>
+    <h2>Why Water?</h2>
+    <div class="divider"></div>
+    <div class="why-grid">
+      <div class="why-story">
+        <p>Water shortage is a major global issue, as available freshwater is decreasing whereas demand is increasing. According to UNICEF, more than two third of the global population experience water scarcity for more than one month per a year. According to the United Nations, around 2.3 billion people live in water-stressed countries, many of them in Sub-Saharan Africa and South Asia.</p>
+        <p>This is a serious problem since water is essential for everyone's life: water is one of the most important resources that we need for our life, along with the oxygen. As water scarcity can cause a lot of problems such as dehydration, waterborne disease, and economic crisis, urgent action is required to tackle this problem.</p>
+        <div class="chart-wrap" style="margin-top:1.5rem;">
+          <div class="stag" style="margin-bottom:.25rem;">Water Stress Level by Region</div>
+          <p style="color:var(--gray);font-size:.74rem;margin-bottom:.5rem;">Source: UN SDG Report 2024 — Goal 6 (Indicator 6.4.2, 2021 data)</p>
+          <p style="color:var(--gray);font-size:.72rem;margin-bottom:1.5rem;">🔗 unstats.un.org/sdgs/report/2024/Goal-06/</p>
+          <div class="bar-chart">
+            <div class="bar-row">
+              <div class="bar-label" style="font-size:.8rem;">Northern Africa</div>
+              <div class="bar-track"><div class="bar-fill" style="--w:100%;background:linear-gradient(90deg,#7f1d1d,#ef4444);">Critical &gt;100%</div></div>
+              <div class="bar-val" style="color:#f87171;font-size:.72rem;width:60px;">Critical</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label" style="font-size:.8rem;">N. Africa & W. Asia<br/><span style="font-size:.68rem;color:#f97316;">(+12% since 2015)</span></div>
+              <div class="bar-track"><div class="bar-fill" style="--w:75%;background:linear-gradient(90deg,#ef4444,#f97316);">&gt;75%</div></div>
+              <div class="bar-val" style="color:#fb923c;font-size:.72rem;width:60px;">High</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label" style="font-size:.8rem;">Central & S. Asia</div>
+              <div class="bar-track"><div class="bar-fill" style="--w:75%;background:linear-gradient(90deg,#f97316,#f59e0b);">&gt;75%</div></div>
+              <div class="bar-val" style="color:#fb923c;font-size:.72rem;width:60px;">High</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label" style="font-size:.8rem;">Global Average</div>
+              <div class="bar-track"><div class="bar-fill" style="--w:18.6%;background:linear-gradient(90deg,#6366f1,#0ea5e9);">18.6%</div></div>
+              <div class="bar-val" style="color:var(--blue);font-size:.72rem;width:60px;">18.6%</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label" style="font-size:.8rem;">Eastern & S.E. Asia</div>
+              <div class="bar-track"><div class="bar-fill" style="--w:15%;background:linear-gradient(90deg,#0ea5e9,#0d9488);">Low</div></div>
+              <div class="bar-val" style="color:var(--teal);font-size:.72rem;width:60px;">Low</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label" style="font-size:.8rem;">Sub-Saharan Africa</div>
+              <div class="bar-track"><div class="bar-fill" style="--w:10%;background:linear-gradient(90deg,#16a34a,#0d9488);">Low</div></div>
+              <div class="bar-val" style="color:#4ade80;font-size:.72rem;width:60px;">Low</div>
+            </div>
+None
+          </div>
+          <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.25rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.07);">
+            <span style="font-size:.72rem;color:#f87171;">🔴 Critical: &gt;100%</span>
+            <span style="font-size:.72rem;color:#fb923c;">🟠 High: &gt;75%</span>
+            <span style="font-size:.72rem;color:#fbbf24;">🟡 Medium: 25–75%</span>
+            <span style="font-size:.72rem;color:var(--blue);">🔵 Low: &lt;25%</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p style="color:var(--gray);font-size:.85rem;margin-bottom:1rem;">📍 Most Water-Stressed Countries — WRI Aqueduct 2023<br/><span style="font-size:.75rem;">Source: <a href="https://www.wri.org/insights/highest-water-stressed-countries" style="color:var(--blue);">wri.org/insights/highest-water-stressed-countries</a></span></p>
+        <div class="country-list">
+          <div class="country-item"><div class="country-flag">🇧🇭</div><div class="country-info"><h4>Bahrain</h4><p>Top 5 most water-stressed country. Extremely limited natural freshwater, almost entirely dependent on desalination.</p></div><span class="stress-badge extreme">Extreme</span></div>
+          <div class="country-item"><div class="country-flag">🇰🇼</div><div class="country-info"><h4>Kuwait</h4><p>Top 5 most water-stressed country. Extremely limited natural freshwater, almost entirely dependent on desalination.</p></div><span class="stress-badge extreme">Extreme</span></div>
+          <div class="country-item"><div class="country-flag">🇴🇲</div><div class="country-info"><h4>Oman</h4><p>Top 5 most water-stressed country. Scorching temperatures and hardly any rainfall.</p></div><span class="stress-badge extreme">Extreme</span></div>
+          <div class="country-item"><div class="country-flag">🇶🇦</div><div class="country-info"><h4>Qatar</h4><p>Top 5 most water-stressed country. No rivers. Water demand nearly doubled between 2006–2013.</p></div><span class="stress-badge extreme">Extreme</span></div>
+          <div class="country-item"><div class="country-flag">🇱🇧</div><div class="country-info"><h4>Lebanon</h4><p>Top 5 most water-stressed country. Unable to store water, widespread water pollution and misuse.</p></div><span class="stress-badge extreme">Extreme</span></div>
+          <div class="country-item"><div class="country-flag">🇮🇳</div><div class="country-info"><h4>India</h4><p>South Asia: 74% of population exposed to extremely high water stress (WRI 2023).</p></div><span class="stress-badge extreme">Extreme</span></div>
+          <div class="country-item"><div class="country-flag">🇵🇰</div><div class="country-info"><h4>Pakistan</h4><p>South Asia: 74% of population exposed to extremely high water stress (WRI 2023).</p></div><span class="stress-badge extreme">Extreme</span></div>
+          <div class="country-item"><div class="country-flag">🇸🇦</div><div class="country-info"><h4>Saudi Arabia</h4><p>Included in WRI top 25 most water-stressed countries. MENA: 83% of population exposed to extremely high water stress.</p></div><span class="stress-badge extreme">Extreme</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<div id="problem">
+  <div class="wrap">
+    <div class="stag">The Problem</div>
+    <h2>Increasing Significance of Water Scarcity</h2>
+    <div class="divider"></div>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <h3>Increasing Significance of Water Scarcity</h3>
+        <ul>
+          <li>Due to technological advancements that inevitably cause more environmental issues, the preservation of clean water is exceptionally harder than ever before.</li>
+          <li>As drinkable water is a necessity for all, especially in underprivileged and marginalized regions, it is becoming increasingly important to monitor and manage the structures through which we can preserve clean water.</li>
+        </ul>
+      </div>
+      <div class="problem-card">
+        <h3>Salination of Fresh Waterbody</h3>
+        <ul>
+          <li>Global warming is a driving force that causes sea levels to rise, which consequently causes the salination of freshwater sources, such as underground water or ponds.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECT -->
+<div id="project">
+  <div class="wrap">
+    <div class="stag">My Project</div>
+    <h2>Providing Clean and Safe Water for People Who Need It Most</h2>
+    <div class="divider"></div>
+    <div style="background:var(--mid);border:1px solid rgba(14,165,233,0.15);border-radius:16px;padding:2rem;margin-bottom:2rem;">
+      <h3 style="color:var(--blue);margin-bottom:1rem;">Purpose</h3>
+      <p style="color:var(--gray);line-height:1.8;">The main objective of this project is to create a more cost and energy efficient desalination plant in order to improve the currently existing desalination system. This will allow freshwater to be distributed more efficiently and eventually contribute to decreasing global warming by reducing the current energy use. I've specifically focused on how this can help better the environments in post conflict regions, such as the Gulf region.</p>
+    </div>
+
+    <!-- SDG Icons 사진 B — 120% 크기 -->
+    <div style="margin-bottom:2rem;">
+      <img src="https://raw.githubusercontent.com/namu77/solardroplab/main/images/P1.png" alt="SDG Icons" style="width:100%;max-width:720px;border-radius:10px;"/>
+    </div>
+
+    <div class="sdg-row">
+      <div class="sdg-card">
+        <h3>🌊 SDG 6 — Clean Water and Sanitation</h3>
+        <p>Directly addressing Target 6.1—achieving universal and equitable access to safe and affordable drinking water for all.</p>
+        <img src="https://raw.githubusercontent.com/namu77/solardroplab/main/images/P2.png" alt="SDG 6" style="width:72%;max-width:216px;border-radius:8px;margin-top:1rem;"/>
+      </div>
+      <div class="sdg-card teal">
+        <h3>🌿 SDG 13 — Climate Action</h3>
+        <p>Directly supporting adaptive capacity in climate-vulnerable nations by providing a grid-independent solution that utilizes 100% passive solar energy.</p>
+        <img src="https://raw.githubusercontent.com/namu77/solardroplab/main/images/P3.png" alt="SDG 13" style="width:72%;max-width:216px;border-radius:8px;margin-top:1rem;"/>
+      </div>
+    </div>
+
+    <h3 style="margin-top:2.5rem;margin-bottom:1rem;font-size:1.2rem;">Significance</h3>
+    <div class="sig-list">
+      <div class="sig-item"><div class="sig-icon">⚡</div><div><p><strong>No artificial energy input required:</strong> Reduces the stress on energy production, leading to a decrease in fossil fuel use and a decrease in global warming. People that do not have access to energy can have a reliable source of water.</p></div></div>
+      <div class="sig-item"><div class="sig-icon">📦</div><div><p><strong>Small Size:</strong> no cost for implementation, can be used by individuals rather than government.</p></div></div>
+      <div class="sig-item"><div class="sig-icon">💰</div><div><p><strong>Cheap:</strong> adequate for people suffering from economic water scarcity (e.g. Low Income Countries, Post-conflict Region).</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<div id="timeline">
+  <div class="wrap">
+    <div class="stag">Research Journey</div>
+    <h2>Timeline</h2>
+    <div class="divider"></div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">January 2025</div>
+        <div class="tl-title">🔍 Brainstorming</div>
+        <p class="tl-desc">Research to identify the current problem, structural design and materials to use for developing a prototype.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">April 2025</div>
+        <div class="tl-title">🧪 Development of First Prototype</div>
+        <p class="tl-desc">First prototype developed using Diamite, SiO₂, Gluconobacter, Bacterial Cellulose, Biochar, Fe₃O₄, and Agar.</p>
+        <div class="tl-img"><img src="https://raw.githubusercontent.com/namu77/solardroplab/main/images/P4.jpg" alt="First Prototype"/></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot teal"></div>
+        <div class="tl-date">September 2025</div>
+        <div class="tl-title">📊 Evaluated its performance, limitations, and environmental and economic feasibility</div>
+        <p class="tl-desc">Performance, limitations, and environmental and economic feasibility evaluated.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:#a78bfa"></div>
+        <div class="tl-date">January 2026</div>
+        <div class="tl-title">🚀 Development of the Second Prototype</div>
+        <p class="tl-desc">Second prototype developed to overcome the limitations identified in the first prototype.</p>
+        <div class="tl-img"><img src="https://raw.githubusercontent.com/namu77/solardroplab/main/images/P5.png" alt="Second Prototype"/></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot now"></div>
+        <div class="tl-date">Present</div>
+        <div class="tl-title">🔬 Ongoing Research</div>
+        <p class="tl-desc">Conducting with different variables to identify the limitation of the model.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROTOTYPES -->
+<div id="prototypes">
+  <div class="wrap">
+    <div class="stag">Prototypes</div>
+    <h2>Prototype Development</h2>
+    <div class="divider"></div>
+    <div class="proto-tabs">
+      <button class="tab-btn active" onclick="showTab('p1',this)">Prototype 1</button>
+      <button class="tab-btn p2-btn" onclick="showTab('p2',this)">Prototype 2 (Improved)</button>
+    </div>
+
+    <!-- P1 -->
+    <div id="p1" class="tab-content active">
+      <div class="proto-grid">
+        <div class="proto-card">
+          <h3>🧬 Materials Used</h3>
+          <ul>
+            <li>Diamite, SiO₂, Gluconobacter, bacterial cellulose — used hydrophilic, low density, high porosity materials</li>
+            <li>Biochar: to maximize heat absorption by increasing emissivity</li>
+            <li>Fe₃O₄: remove heavy metals from water, high photothermal conversion efficiency</li>
+            <li>Agar: helps to mix different materials</li>
+          </ul>
+        </div>
+        <div class="proto-card">
+          <h3>📊 Experimental Result</h3>
+          <p style="color:var(--gray);font-size:.85rem;margin-top:.75rem;margin-bottom:.5rem;">— Temperature Change</p>
+          <img src="https://raw.githubusercontent.com/namu77/solardroplab/main/images/P6.png" alt="Temperature Change" style="width:100%;border-radius:8px;"/>
+          <p style="color:var(--gray);font-size:.85rem;margin-top:1rem;margin-bottom:.5rem;">— Absorption of water</p>
+          <img src="https://raw.githubusercontent.com/namu77/solardroplab/main/images/P7.png" alt="Absorption of water" style="width:100%;border-radius:8px;"/>
+          <p style="color:var(--gray);font-size:.85rem;margin-top:1rem;margin-bottom:.5rem;">— Evaporation of water</p>
+          <img src="https://raw.githubusercontent.com/namu77/solardroplab/main/images/P8.png" alt="Evaporation of water" style="width:100%;border-radius:8px;"/>
+          <div style="margin-top:1rem;">
+            <h3 style="color:#f87171;margin-bottom:.75rem;font-size:.95rem;">⚠️ Limitations</h3>
+            <div class="limit-cards">
+              <div class="limit-card">
+                <div class="limit-card-icon">⚠️</div>
+                <div class="limit-card-body">
+                  <p>The structure retained a significant amount of water, indicating that the rate of evaporation was relatively slower than the rate of absorption. The surface did not heat efficiently because the faster rate of absorption provided cooler water to the structure, which further reduced the rate of evaporation.</p>
+                </div>
+              </div>
+            </div>
+            <div class="p2-bridge">
+              <p><strong>These findings led to the key improvements made in Prototype 2.</strong></p>
+              <button class="p2-bridge-btn" onclick="showTab('p2', document.querySelector('.tab-btn.p2-btn'))">View Prototype 2 →</button>
+            </div>
+          </div>
+          <img src="https://raw.githubusercontent.com/namu77/solardroplab/main/images/P9.png" alt="Limitations diagram" style="width:100%;border-radius:8px;margin-top:1rem;"/>
+        </div>
+      </div>
+
+      <p style="color:var(--gray);font-size:.85rem;margin-top:2rem;margin-bottom:.75rem;">🔬 Lab Process</p>
+      <div class="photo-grid-single">
+        <div class="img-card">
+          <img src="https://raw.githubusercontent.com/namu77/solardroplab/main/images/P10.png" alt="Lab H"/>
+          <div class="img-caption">Preparing culture medium for Gluconobacter</div>
+        </div>
+        <div class="img-card">
+          <img src="https://raw.githubusercontent.com/namu77/solardroplab/main/images/P11.png" alt="Lab I"/>
+          <div class="img-caption">Making first prototype via mixing silica and agar</div>
+        </div>
+        <div class="img-card">
+          <img src="https://raw.githubusercontent.com/namu77/solardroplab/main/images/P12.png" alt="Lab J"/>
+          <div class="img-caption">Making cylindrical structure</div>
+        </div>
+        <div class="img-card">
+          <img src="https://raw.githubusercontent.com/namu77/solardroplab/main/images/P12-1.png" alt="Lab K"/>
+          <div class="img-caption">Measuring water absorptivity and change in surface temperature of the structure placed under the incandescent light bulb</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P2 -->
+    <div id="p2" class="tab-content">
+
+      <!-- Banner -->
+      <div class="p2-banner">
+        <div class="p2-banner-icon">🚀</div>
+        <div class="p2-banner-text">
+          <h3>Prototype 2 (Improved)</h3>
+          <p>In order to overcome the limitations identified in the first prototype, a second prototype was made.</p>
+        </div>
+      </div>
+
+      <!-- Key Improvement Cards -->
+      <p style="color:var(--white);font-weight:700;margin-bottom:1rem;">Changes Made</p>
+      <div class="improvement-grid">
+
+        <div class="improvement-card">
+          <div class="ic-header">
+            <div class="ic-icon">📏</div>
+            <div class="ic-title">Bigger size</div>
+            <span class="ic-badge">Efficiency ↑</span>
+          </div>
+          <p class="ic-reason">Reason: To increase the practicality and efficiency of water collection</p>
+        </div>
+
+        <div class="improvement-card">
+          <div class="ic-header">
+            <div class="ic-icon">🧪</div>
+            <div class="ic-title">Change in materials used: agar → sodium alginate</div>
+            <span class="ic-badge">Evaporation ↑</span>
+          </div>
+          <p class="ic-reason">Reason: In the first prototype, agar was effective at absorbing water, but it retained the water, preventing efficient evaporation. Thus, sodium alginate, which has lower water retention, is used instead of agar.</p>
+        </div>
+
+        <div class="improvement-card">
+          <div class="ic-header">
+            <div class="ic-icon">🌾</div>
+            <div class="ic-title">Change in materials used: biochar → carbonized rice hull</div>
+            <span class="ic-badge">Absorption ↑</span>
+          </div>
+          <p class="ic-reason">Reason: to increase the rate of water absorption</p>
+        </div>
+
+        <div class="improvement-card">
+          <div class="ic-header">
+            <div class="ic-icon">🏊</div>
+            <div class="ic-title">Change in physical structure</div>
+            <span class="ic-badge">Surface Area ↑</span>
+          </div>
+          <p class="ic-reason">Reason: The initial structure was partially submerged in water, while the second prototype floats on the water. This change was made to increase the surface area that touches the water, subsequently increasing the rate of absorption.</p>
+        </div>
+
+      </div>
+
+      <p style="color:var(--gray);font-size:.85rem;margin-top:2rem;margin-bottom:.75rem;">🔬 Lab Photos</p>
+      <div class="photo-grid-single">
+        <div class="img-card">
+          <img src="https://raw.githubusercontent.com/namu77/solardroplab/main/images/P14-1.png" alt="P2 Lab 1"/>
+          <div class="img-caption">The process of mixing sodium alginate, biochar, calcium carbonate, and silica</div>
+        </div>
+        <div class="img-card">
+          <img src="https://raw.githubusercontent.com/namu77/solardroplab/main/images/P15.png" alt="P2 Lab 2"/>
+          <div class="img-caption">Making second prototype by treating the structure with HCl</div>
+        </div>
+        <div class="img-card">
+          <img src="https://raw.githubusercontent.com/namu77/solardroplab/main/images/P16.png" alt="P2 Lab 3"/>
+          <div class="img-caption">Assambly of desalination plant model for second prototype</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="contact-wrap">
+  <div class="stag">Connect</div>
+  <h2>Let's Talk</h2>
+  <div class="divider" style="margin:0 auto 1.5rem;"></div>
+  <p>Interested in environmental research, water scarcity, or sustainable technology? Want to learn more about my project? Feel free to reach out!</p>
+  <div class="contact-box">
+    <p>📬 Feel free to reach out via email!</p>
+    <a href="mailto:js.an070516@gmail.com" style="display:inline-block;margin-top:1rem;background:var(--blue);color:#fff;padding:.75rem 2rem;border-radius:8px;text-decoration:none;font-weight:600;">js.an070516@gmail.com</a>
+  </div>
+</div>
+
+<footer>
+  © 2026 An Jinseok (안진석) · <a href="http://www.solardroplab.com" style="color:var(--blue);text-decoration:none;">solardroplab.com</a> · Built with passion for a cleaner world 💧
+</footer>
+
+<script>
+function showTab(id,btn){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
